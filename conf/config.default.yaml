@@ -1,0 +1,28 @@
+server:
+  host: 0.0.0.0
+  port: 8080
+
+logging:
+  filename: rain.log
+  level:
+    app: info
+    gorm: warn
+  maxsize: 10 # 单位 bytes
+  maxage: 30 # 单位 天
+  compress: false # 是否对旧日志使用gzip进行压缩
+
+### 数据库配置, Mysql SQLite3 二选一 优先Sqlite3
+sqlite3:
+  enable: true
+
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  db: raindb
+  username: "root"
+  password: "Admin123."
+
+rain:
+  mode: "prod"
+  workDir: "./" # 不填默认为当前路径
+  logDir: "./logs" # 不填则使用work_dir 路径下的log路径 (If it is empty, use the "log" path under work_dir)
