@@ -3,8 +3,8 @@ package consts
 type DBType string
 
 const (
-	DBTypeMySQL  = "MySQL"
-	DBTypeSQLite = "SQLite"
+	DBTypeMySQL  = "mysql"
+	DBTypeSQLite = "sqlite3"
 )
 type AttachmentType int32
 

@@ -1,12 +1,12 @@
 package model
 
 type Config struct {
-	Server  Server  `yaml:"server"`
-	Log     Log     `yaml:"log"`
-	Sqlite3 Sqlite3 `yaml:"sqlite3"`
-	Mysql   Mysql   `yaml:"mysql"`
-	Rain    Rain    `yaml:"rain"`
-	Model   string  `yaml:"model"`
+	Server  *Server  `yaml:"server" json:"server"`
+	Log     *Log     `yaml:"log" json:"log"`
+	Sqlite3 *Sqlite3 `yaml:"sqlite3" json:"sqlite3"`
+	Mysql   *Mysql   `yaml:"mysql"`
+	Rain    *Rain    `yaml:"rain"`
+	Model   string   `yaml:"model"`
 }
 
 type Server struct {
@@ -20,10 +20,12 @@ type Log struct {
 	OutputPaths      []string      `yaml:"outputPaths"`
 	EncoderConfig    EncoderConfig `yaml:"encoderConfig"`
 	Maxsize          int           `yaml:"maxsize"`
-	Maxage           int           `yaml:"maxage"`
+	MaxAge           int           `yaml:"maxage"`
 	Filename         string        `yaml:"filename"`
 	Encoding         string        `yaml:"encoding"`
 	ErrorOutputPaths []string      `yaml:"errorOutputPaths"`
+	FileMaxBackups   int           `yaml:"file_max_backups"`
+	Stdout           bool          `yaml:"stdout"`
 }
 
 type EncoderConfig struct {
