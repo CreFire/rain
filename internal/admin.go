@@ -3,13 +3,10 @@ package internal
 import (
 	"github.com/CreFire/rain/dal"
 	"github.com/CreFire/rain/model"
-	"github.com/CreFire/rain/tools/log"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
 	"net/http"
 	"strconv"
-	"xorm.io/xorm"
 )
 
 func loginEndpoint(c *gin.Context) {
@@ -18,13 +15,7 @@ func loginEndpoint(c *gin.Context) {
 	password := c.PostForm("password")
 
 	// Get a new *xorm.Engine instance
-	engine, err := dal.NewDB()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Failed to create engine",
-		})
-		return
-	}
+	engine := dal.GetDb()
 	defer engine.Close() // Close the engine at the end of the function
 
 	// Create a new User object to search for
@@ -79,13 +70,8 @@ func SelectIdEndpoint(c *gin.Context) {
 		return
 	}
 	// Create a new xorm Engine and connect to the database
-	engine, _ := dal.NewDB()
-	defer func(engine *xorm.Engine) {
-		err := engine.Close()
-		if err != nil {
-			log.Error("dbClose err", zap.Error(err))
-		}
-	}(engine)
+	engine := dal.GetDb()
+	engine.Close()
 
 	// Create a new User object to search for
 	user := &model.User{Id: uint(id)}

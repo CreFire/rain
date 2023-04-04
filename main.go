@@ -18,14 +18,18 @@ func main() {
 	// 使用 Zap 记录日志
 	r.Use(LoggerMiddleware(logger), LoggerReCover(logger))
 	internal.Router(r)
-
+	err := r.Run(":8080")
+	if err != nil {
+		log.Error("serve failed", log.Err(err))
+		return
+	}
 }
 
 func LoggerReCover(logger *log.Logger) gin.HandlerFunc {
 	return func(context *gin.Context) {
 		defer func() {
 			if r := recover(); r != any(nil) {
-				logger.Fatal("msg:%v",log.Any("panic",any(r)))
+				logger.Fatal("msg:%v", log.Any("panic", any(r)))
 			}
 		}()
 	}

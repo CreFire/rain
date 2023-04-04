@@ -19,7 +19,7 @@ var (
 const mysqlDsn = "%s:%s@tcp(%s:%v)/%s?charset=utf8mb4&parseTime=True&loc=Local&timeout=3s&readTimeout" +
 	"=1s&writeTimeout=1s&interpolateParams=true"
 
-func NewDB() (*xorm.Engine, error) {
+func NewDB() (err error) {
 	//nolint:critic
 	if config.Conf.Sqlite3 != nil && config.Conf.Sqlite3.Enable {
 		initSQLite()
@@ -38,7 +38,7 @@ func NewDB() (*xorm.Engine, error) {
 	sqlDB.SetMaxOpenConns(300)
 	sqlDB.SetConnMaxIdleTime(time.Hour)
 
-	return dbEngine, nil
+	return nil
 }
 
 func initSQLite() {
@@ -60,13 +60,11 @@ func InitMysql() {
 	}
 	dsn := fmt.Sprintf(mysqlDsn, mysqlConfig.Username, mysqlConfig.Password, mysqlConfig.Host, mysqlConfig.Port, mysqlConfig.Db)
 	var err error
-	fmt.Printf("dsn:%v \n",dsn)
+	fmt.Printf("dsn:%v \n", dsn)
 	dbEngine, err = xorm.NewEngine(consts.DBTypeMySQL, dsn)
 	if err != nil {
 		log.Fatal("mysql NewEngine err", log.Err(err))
 	}
-	dbEngine.SetLogger(log.NewLogger)
-
 }
 
 func GetDb() *xorm.Engine {
