@@ -13,31 +13,35 @@ func main() {
 	// 初始化 Zap 日志记录器
 	logger := log.NewDefault()
 
-	dal.NewDB()
+	err := dal.NewDB()
+	if err != nil {
+		logger.Error("db conn err", log.Err(err))
+	}
 	r := gin.New()
 	// 使用 Zap 记录日志
 	r.Use(LoggerMiddleware(logger), LoggerReCover(logger))
 	internal.Router(r)
-	err := r.Run(":8080")
+	err = r.Run(":8080")
 	if err != nil {
-		log.Error("serve failed", log.Err(err))
-		return
+		logger.Error("serve failed", log.Err(err))
 	}
 }
 
-func LoggerReCover(logger *log.Logger) gin.HandlerFunc {
-	return func(context *gin.Context) {
+func LoggerReCover(l *log.Logger) gin.HandlerFunc {
+	return func(c *gin.Context) {
 		defer func() {
-			if r := recover(); r != any(nil) {
-				logger.Fatal("msg:%v", log.Any("panic", any(r)))
+			if r := recover(); r != nil {
+				l.Error("Panic occurred", log.Any("panic", r))
 			}
 		}()
+		c.Next()
 	}
 }
-func LoggerMiddleware(logger *log.Logger) gin.HandlerFunc {
+
+func LoggerMiddleware(l *log.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 在请求前执行某些操作
-		logger.Info("New request", zap.String("path", c.Request.URL.Path))
+		l.Info("New request", zap.String("path", c.Request.URL.Path))
 		c.Next()
 		// 在请求后执行某些操作
 	}
