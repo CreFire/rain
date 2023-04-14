@@ -14,8 +14,8 @@ log:
     messageKey: "message" # 日志消息的字段名
     levelKey: "level"     # 日志级别的字段名
     levelEncoder: "lowercase" # 日志级别编码方式：capital, color, lowercase, uppercase
-  filename: "myapp.log" # 输出日志文件名
-  encoding: "json" # 日志编码方式：console, json
+  filename: "" #"myapp.log" # 输出日志文件名
+  encoding: "prod" # 日志编码方式：console, json
   errorOutputPaths:
     - "/var/log/myapp_error.log" # 错误日志输出到 /var/log/myapp_error.log
     - "stderr"                   # 同时输出到标准错误输出

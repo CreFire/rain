@@ -1,7 +1,6 @@
 package log
 
 import (
-	"github.com/CreFire/rain/model"
 	"github.com/CreFire/rain/tools/config"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -16,9 +15,10 @@ var (
 	_minTimeInt64 = time.Unix(0, math.MinInt64)
 	_maxTimeInt64 = time.Unix(0, math.MaxInt64)
 
-	exportUseLogger      *Logger
-	exportUseSugarLogger *zap.SugaredLogger
+	exportLogger      *zap.Logger
+	exportSugarLogger *zap.SugaredLogger
 )
+
 const (
 	flagLevel = "log.level"
 )
@@ -26,7 +26,7 @@ const (
 const DefaultLogPath = "/var/log/test" // 默认输出日志文件路径
 
 // getWriter 自定义Writer,分割日志
-func getWriter(conf *model.Log) zapcore.WriteSyncer {
+func getWriter(conf *config.Log) zapcore.WriteSyncer {
 	if len(conf.OutputPaths) < 1 {
 		conf.OutputPaths = []string{DefaultLogPath}
 	}
@@ -64,8 +64,6 @@ func IsExist(path string) bool {
 	_, err := os.Stat(path)
 	return err == nil || os.IsExist(err)
 }
-
-
 
 // getProdEncoder 自定义日志编码器
 func getProdEncoder() zapcore.Encoder {
