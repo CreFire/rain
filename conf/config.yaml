@@ -20,7 +20,7 @@ log:
     - "/var/log/myapp_error.log" # 错误日志输出到 /var/log/myapp_error.log
     - "stderr"                   # 同时输出到标准错误输出
   file_max_backups: 2 # 日志备份文件最多数量
-  stdout: true # 是否输出到控制台
+  stdout: false # 是否输出到控制台
 ### 数据库配置, Mysql SQLite3 二选一 优先Sqlite3
 sqlite3:
   enable: false # 是否启用 SQLite3 数据库
