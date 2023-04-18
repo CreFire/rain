@@ -6,6 +6,7 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
+	"io"
 	"os"
 )
 
@@ -29,6 +30,7 @@ func New(cfg *config.Log) (*Logger, error) {
 	if err := level.UnmarshalText([]byte(cfg.Level)); err != nil {
 		return nil, err
 	}
+
 	// 设置日志编码器
 	switch cfg.Encoding {
 	case "json":
@@ -45,9 +47,8 @@ func New(cfg *config.Log) (*Logger, error) {
 	// 设置日志输出
 	if cfg.Stdout {
 		writer = zapcore.Lock(os.Stdout)
-		//writer = zapcore.AddSync(io.Discard)
 	}
-
+	writer = zapcore.AddSync(io.Discard)
 	if cfg.Filename != "" {
 		fileWriter := zapcore.AddSync(&lumberjack.Logger{
 			Filename:   cfg.Filename,
@@ -68,6 +69,7 @@ func New(cfg *config.Log) (*Logger, error) {
 			writer = fileWriter
 		}
 	}
+	zap.NewProduction(zap.WithCaller(true), zap.AddStacktrace(zapcore.DPanicLevel), zap.IncreaseLevel(level))
 	// 组合日志核心
 	core = zapcore.NewCore(encoder, writer, level)
 

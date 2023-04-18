@@ -3,6 +3,7 @@ package log
 import (
 	"github.com/CreFire/rain/tools/config"
 	"github.com/sirupsen/logrus"
+	"go.uber.org/zap/zapcore"
 	"io"
 	"testing"
 
@@ -12,6 +13,7 @@ import (
 func BenchmarkLog(b *testing.B) {
 	logger, _ := New(config.Conf.Log)
 	b.ResetTimer()
+
 	for i := 0; i < b.N; i++ {
 		logger.Debug("A walrus appears",
 			zap.String("animal", "walrus"),
@@ -22,7 +24,8 @@ func BenchmarkLog(b *testing.B) {
 }
 
 func BenchmarkZap(b *testing.B) {
-	logger, _ := zap.NewProduction()
+	logger, _ := zap.NewProduction(zap.WithCaller(true), zap.AddStacktrace(zapcore.DPanicLevel))
+	logger.Core().With([]zap.Field{String("k", "v")})
 	defer logger.Sync()
 
 	b.ResetTimer()
