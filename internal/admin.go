@@ -1,12 +1,17 @@
 package internal
 
 import (
-	"github.com/CreFire/rain/dal"
+	"github.com/CreFire/rain/internal/common"
+	"github.com/CreFire/rain/internal/dal"
 	"github.com/CreFire/rain/model"
+	"github.com/CreFire/rain/tools/log"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 	"net/http"
 	"strconv"
+	"time"
+	"xorm.io/xorm"
 )
 
 func loginEndpoint(c *gin.Context) {
@@ -16,7 +21,12 @@ func loginEndpoint(c *gin.Context) {
 
 	// Get a new *xorm.Engine instance
 	engine := dal.GetDb()
-	defer engine.Close() // Close the engine at the end of the function
+	defer func(engine *xorm.Engine) {
+		err := engine.Close()
+		if err != nil {
+			log.Error("engine close err", zap.Error(err))
+		}
+	}(engine) // Close the engine at the end of the function
 
 	// Create a new User object to search for
 	user := &model.User{Email: username}
@@ -39,13 +49,13 @@ func loginEndpoint(c *gin.Context) {
 
 	// Password is correct, create a new JWT token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"id":    user.Id,
-		"email": user.Email,
-		// Add other claims here as needed
+		"id":   user.Id,
+		"role": user.Position,
+		"time": time.Now().Unix(),
 	})
 
 	// Generate a signed token string
-	tokenString, err := token.SignedString([]byte("my-secret-key"))
+	tokenString, err := token.SignedString([]byte(common.MySecretKey))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Failed to generate token",

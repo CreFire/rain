@@ -24,6 +24,7 @@ type Mysql struct {
 	Username string `yaml:"username"`
 	Password string `yaml:"password"`
 	Host     string `yaml:"host"`
+	Charset  string `yaml:"charset"`
 }
 
 type Rain struct {

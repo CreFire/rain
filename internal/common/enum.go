@@ -1,4 +1,4 @@
-package consts
+package common
 
 type DBType string
 
@@ -6,8 +6,8 @@ const (
 	DBTypeMySQL  = "mysql"
 	DBTypeSQLite = "sqlite3"
 )
-type AttachmentType int32
 
+type AttachmentType int32
 
 const (
 	AttachmentTypeLocal AttachmentType = iota

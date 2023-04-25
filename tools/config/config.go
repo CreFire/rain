@@ -15,9 +15,9 @@ var Conf *Config
 // config init
 func init() {
 	Conf = &Config{}
-	viper.SetConfigName("config")     // 设置配置文件名
-	viper.AddConfigPath("../../conf") // 设置配置文件路径
-	err := viper.ReadInConfig()       // 读取配置文件
+	viper.SetConfigName("config") // 设置配置文件名
+	viper.AddConfigPath("./conf") // 设置配置文件路径
+	err := viper.ReadInConfig()   // 读取配置文件
 	if err != nil {
 		log.Fatalf("Failed to read the config file: %s", err)
 	}

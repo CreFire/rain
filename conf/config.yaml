@@ -29,7 +29,8 @@ mysql:
   port: 3306 # MySQL 数据库端口号
   db: chatDb # MySQL 数据库名称
   username: "root" # MySQL 数据库用户名
-  password: "Jy347803820." # MySQL 数据库密码
+  password: "j347803820" # MySQL 数据库密码
+  Charset: "utf8mb4" # mysql 数据库编码格式
 
 rain:
   mode: "development" # 框架运行模式，支持 development 和 production 两种模式

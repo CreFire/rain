@@ -2,7 +2,7 @@ package model
 
 import (
 	"errors"
-	"github.com/CreFire/rain/dal"
+	"github.com/CreFire/rain/internal/dal"
 	"time"
 )
 

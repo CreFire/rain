@@ -1,9 +1,8 @@
 package main
 
 import (
-	"github.com/CreFire/rain/dal"
 	"github.com/CreFire/rain/internal"
-	"github.com/CreFire/rain/tools/config"
+	"github.com/CreFire/rain/internal/dal"
 	"github.com/CreFire/rain/tools/log"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -12,7 +11,7 @@ import (
 func main() {
 	gin.SetMode(gin.DebugMode)
 	// 初始化 Zap 日志记录器
-	logger, _ := log.New(config.Conf.Log)
+	logger := log.GetLog()
 
 	err := dal.NewDB()
 	if err != nil {

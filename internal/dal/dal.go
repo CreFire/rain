@@ -2,7 +2,7 @@ package dal
 
 import (
 	"fmt"
-	"github.com/CreFire/rain/consts"
+	"github.com/CreFire/rain/internal/common"
 	"github.com/CreFire/rain/tools/config"
 	log "github.com/CreFire/rain/tools/log"
 	_ "github.com/go-sql-driver/mysql"
@@ -12,7 +12,7 @@ import (
 
 var (
 	dbEngine *xorm.Engine
-	DbType   consts.DBType
+	DbType   common.DBType
 )
 
 // mysqlDsn example  user:password@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local
@@ -23,10 +23,10 @@ func NewDB() (err error) {
 	//nolint:critic
 	if config.Conf.Sqlite3 != nil && config.Conf.Sqlite3.Enable {
 		initSQLite()
-		DbType = consts.DBTypeSQLite
+		DbType = common.DBTypeSQLite
 	} else if config.Conf.Mysql != nil {
 		InitMysql()
-		DbType = consts.DBTypeMySQL
+		DbType = common.DBTypeMySQL
 	} else {
 		log.Fatal("No database available")
 	}
@@ -47,7 +47,7 @@ func initSQLite() {
 		log.Fatal("nil SQLite config")
 	}
 	var err error
-	dbEngine, err = xorm.NewEngine(consts.DBTypeSQLite, "./data")
+	dbEngine, err = xorm.NewEngine(common.DBTypeSQLite, "./data")
 	if err != nil {
 		log.Fatal("nil SQLite config")
 	}
@@ -61,7 +61,7 @@ func InitMysql() {
 	dsn := fmt.Sprintf(mysqlDsn, mysqlConfig.Username, mysqlConfig.Password, mysqlConfig.Host, mysqlConfig.Port, mysqlConfig.Db)
 	var err error
 	fmt.Printf("dsn:%v \n", dsn)
-	dbEngine, err = xorm.NewEngine(consts.DBTypeMySQL, dsn)
+	dbEngine, err = xorm.NewEngine(common.DBTypeMySQL, dsn)
 	if err != nil {
 		log.Fatal("mysql NewEngine err", log.Err(err))
 	}

@@ -6,6 +6,10 @@ var (
 	exLogger *Logger
 )
 
+func GetLog() *Logger {
+	return exLogger
+}
+
 func Debug(msg string, fields ...zap.Field) {
 	exLogger.logger.Debug(msg, fields...)
 }

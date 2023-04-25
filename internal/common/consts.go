@@ -1,4 +1,4 @@
-package consts
+package common
 
 import "time"
 
@@ -14,7 +14,5 @@ const (
 	OneTimeTokenQueryName     = "ott"
 	SessionID                 = "session_id"
 	AccessPermissionKeyPrefix = "access_permission_"
+	MySecretKey               = "key"
 )
-
-
- 
