@@ -2,9 +2,9 @@ package dal
 
 import (
 	"fmt"
-	"github.com/CreFire/rain/internal/common"
-	"github.com/CreFire/rain/tools/config"
-	log "github.com/CreFire/rain/tools/log"
+	"github.com/CreFire/rain/common"
+	"github.com/CreFire/rain/utils/config"
+	log "github.com/CreFire/rain/utils/log"
 	_ "github.com/go-sql-driver/mysql"
 	"time"
 	"xorm.io/xorm"

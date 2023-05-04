@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/CreFire/rain/internal"
-	"github.com/CreFire/rain/internal/dal"
-	"github.com/CreFire/rain/tools/log"
+	"github.com/CreFire/rain/api"
+	"github.com/CreFire/rain/dal"
+	"github.com/CreFire/rain/utils/log"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
@@ -20,7 +20,7 @@ func main() {
 	r := gin.New()
 	// 使用 Zap 记录日志
 	r.Use(LoggerMiddleware(logger), LoggerReCover(logger))
-	internal.Router(r)
+	api.Router(r)
 	err = r.Run(":8080")
 	if err != nil {
 		logger.Error("serve failed", log.Err(err))

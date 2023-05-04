@@ -2,7 +2,7 @@ package log
 
 import (
 	"errors"
-	"github.com/CreFire/rain/tools/config"
+	"github.com/CreFire/rain/utils/config"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"

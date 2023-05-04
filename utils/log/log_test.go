@@ -1,7 +1,7 @@
 package log
 
 import (
-	"github.com/CreFire/rain/tools/config"
+	"github.com/CreFire/rain/utils/config"
 	"github.com/sirupsen/logrus"
 	"go.uber.org/zap/zapcore"
 	"io"

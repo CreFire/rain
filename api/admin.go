@@ -1,10 +1,10 @@
-package internal
+package api
 
 import (
-	"github.com/CreFire/rain/internal/common"
-	"github.com/CreFire/rain/internal/dal"
+	"github.com/CreFire/rain/common"
+	"github.com/CreFire/rain/dal"
 	"github.com/CreFire/rain/model"
-	"github.com/CreFire/rain/tools/log"
+	"github.com/CreFire/rain/utils/log"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -14,7 +14,7 @@ import (
 	"xorm.io/xorm"
 )
 
-func loginEndpoint(c *gin.Context) {
+func loginHandler(c *gin.Context) {
 	// Get the username and password from the request
 	username := c.PostForm("username")
 	password := c.PostForm("password")
@@ -29,7 +29,7 @@ func loginEndpoint(c *gin.Context) {
 	}(engine) // Close the engine at the end of the function
 
 	// Create a new User object to search for
-	user := &model.User{Email: username}
+	user := &model.User{Name: username}
 
 	// Use the xorm Engine's Get method to retrieve the User from the database
 	if _, err := engine.Get(user); err != nil {
@@ -50,7 +50,7 @@ func loginEndpoint(c *gin.Context) {
 	// Password is correct, create a new JWT token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"id":   user.Id,
-		"role": user.Position,
+		"role": user.Role,
 		"time": time.Now().Unix(),
 	})
 
@@ -65,11 +65,12 @@ func loginEndpoint(c *gin.Context) {
 
 	// Return the token string as JSON
 	c.JSON(http.StatusOK, gin.H{
-		"token": tokenString,
+		"message": "登录成功",
+		"token":   tokenString,
 	})
 }
 
-func SelectIdEndpoint(c *gin.Context) {
+func SelectIdHandler(c *gin.Context) {
 	// Get the ID parameter from the request URL
 	idStr := c.Param("id")
 	id, err := strconv.ParseUint(idStr, 10, 64)
@@ -84,7 +85,7 @@ func SelectIdEndpoint(c *gin.Context) {
 	engine.Close()
 
 	// Create a new User object to search for
-	user := &model.User{Id: uint(id)}
+	user := &model.User{Id: uint64(id)}
 
 	// Use the xorm Engine's Get method to retrieve the User from the database
 	if _, err := engine.Get(user); err != nil {
@@ -98,7 +99,7 @@ func SelectIdEndpoint(c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
-func registerEndpoint(c *gin.Context) {
+func registerHandler(c *gin.Context) {
 	// 解析请求体中的 JSON 数据
 	var user model.User
 	if err := c.BindJSON(&user); err != nil {
@@ -118,4 +119,8 @@ func registerEndpoint(c *gin.Context) {
 
 	// 返回响应
 	c.JSON(http.StatusOK, gin.H{"message": "User registered successfully"})
+}
+
+func adminDashboardHandler(c *gin.Context) {
+
 }

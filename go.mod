@@ -20,7 +20,7 @@ require (
 	github.com/PuerkitoBio/purell v1.2.0 // indirect
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/benbjohnson/clock v1.3.0 // indirect
-	github.com/bytedance/sonic v1.8.7 // indirect
+	github.com/bytedance/sonic v1.8.8 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect

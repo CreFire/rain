@@ -2,19 +2,19 @@ package model
 
 import (
 	"errors"
-	"github.com/CreFire/rain/internal/dal"
+	"github.com/CreFire/rain/dal"
 	"time"
 )
 
 // User 用户模型
 type User struct {
-	Id       uint       `xorm:"'id' AUTO_INCREMENT pk" json:"id"`                 // 用户 ID，主键自增
+	Id       uint64     `xorm:"'id' AUTO_INCREMENT pk" json:"id"`                 // 用户 ID，主键自增
 	Name     string     `xorm:"'name' varchar(50)" json:"name"`                   // 用户姓名
-	Age      int        `xorm:"'age' int(3)" json:"age"`                          // 用户年龄
+	Age      int32      `xorm:"'age' int(3)" json:"age"`                          // 用户年龄
 	Birthday *time.Time `xorm:"'birthday' date" json:"birthday,omitempty"`        // 用户出生日期（可选）
 	Email    string     `xorm:"'email' varchar(255) unique_index" json:"email"`   // 用户邮箱（唯一）
 	PassWord string     `xorm:"'password' varchar(25)" json:"password,omitempty"` // 用户密码（可选）
-	Position int        `xorm:"'position' int" json:"position"`                   // 用户职位
+	Role     int32      `xorm:"'position' int" json:"position"`                   // 用户职位
 	Nickname string     `xorm:"'nickname' varchar(50)" json:"nickname"`           // 用户昵称
 	iPhone   string     `xorm:"varchar(20)"`                                      // 用户手机号码
 }
@@ -69,7 +69,7 @@ func DeleteUser(id uint) error {
 }
 
 // GetUser 获取用户
-func GetUser(id uint) (*User, error) {
+func GetUser(id uint64) (*User, error) {
 	session := dal.GetDb().NewSession()
 	defer session.Close()
 
