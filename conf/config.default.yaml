@@ -25,11 +25,11 @@ log:
 sqlite3:
   enable: false # 是否启用 SQLite3 数据库
 mysql:
-  host: 139.155.253.90 # MySQL 数据库主机地址
+  host: 1.1.1.1 # MySQL 数据库主机地址
   port: 3306 # MySQL 数据库端口号
   db: chatDb # MySQL 数据库名称
-  username: "" # MySQL 数据库用户名
-  password: "" # MySQL 数据库密码
+  username: "1" # MySQL 数据库用户名
+  password: "1" # MySQL 数据库密码
 
 rain:
   mode: "development" # 框架运行模式，支持 development 和 production 两种模式
