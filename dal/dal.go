@@ -65,6 +65,11 @@ func InitMysql() {
 	if err != nil {
 		log.Fatal("mysql NewEngine err", log.Err(err))
 	}
+	if err = dbEngine.Ping(); err != nil {
+		fmt.Println("Error on pinging database: ", err)
+		return
+	}
+	fmt.Println("Database connected successfully!")
 }
 
 func GetDb() *xorm.Engine {

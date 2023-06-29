@@ -11,28 +11,24 @@ import (
 	"net/http"
 	"strconv"
 	"time"
-	"xorm.io/xorm"
 )
 
 func loginHandler(c *gin.Context) {
 	// Get the username and password from the request
-	username := c.PostForm("username")
-	password := c.PostForm("password")
-
+	user := model.User{}
+	// Create a new User object to search for
+	if err := c.BindJSON(&user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	log.Info("login 1", zap.Any("user", user))
 	// Get a new *xorm.Engine instance
 	engine := dal.GetDb()
-	defer func(engine *xorm.Engine) {
-		err := engine.Close()
-		if err != nil {
-			log.Error("engine close err", zap.Error(err))
-		}
-	}(engine) // Close the engine at the end of the function
-
-	// Create a new User object to search for
-	user := &model.User{Name: username}
-
+	curUser := model.User{
+		Name: user.Name,
+	}
 	// Use the xorm Engine's Get method to retrieve the User from the database
-	if _, err := engine.Get(user); err != nil {
+	if _, err := engine.Get(&curUser); err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"error": "Invalid username or password",
 		})
@@ -40,7 +36,7 @@ func loginHandler(c *gin.Context) {
 	}
 
 	// Check if the password is correct
-	if user.PassWord != password {
+	if curUser.PassWord != user.PassWord {
 		c.JSON(http.StatusUnauthorized, gin.H{
 			"error": "Invalid username or password",
 		})

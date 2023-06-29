@@ -69,7 +69,6 @@ func New(cfg *config.Log) (*Logger, error) {
 			writer = fileWriter
 		}
 	}
-	zap.NewProduction(zap.WithCaller(true), zap.AddStacktrace(zapcore.DPanicLevel), zap.IncreaseLevel(level))
 	// 组合日志核心
 	core = zapcore.NewCore(encoder, writer, level)
 

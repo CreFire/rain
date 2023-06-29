@@ -13,7 +13,10 @@ import (
 func Router(r *gin.Engine) {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
-
+	err := r.SetTrustedProxies(nil)
+	if err != nil {
+		return
+	}
 	r.GET("/register", registerHandler)
 	r.GET("/select", SelectIdHandler)
 	r.POST("/login", loginHandler)
@@ -37,9 +40,6 @@ func Router(r *gin.Engine) {
 	{
 		memberRoutes.GET("/profile", memberProfileHandler)
 	}
-
-	// 运行服务器
-	r.Run(":8080")
 }
 
 func roleMiddleware(requiredRole common.ROLE_TYPE) gin.HandlerFunc {
