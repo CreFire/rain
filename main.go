@@ -6,7 +6,7 @@ import (
 	"github.com/CreFire/rain/model"
 	"github.com/CreFire/rain/utils/log"
 	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
+	"time"
 )
 
 func main() {
@@ -20,29 +20,34 @@ func main() {
 	r := gin.New()
 	// 使用 Zap 记录日志
 	r.Use(LoggerMiddleware(logger), LoggerReCover(logger))
-	logger.Info("start rain")
+	logger.Info("start rain", log.String("time", time.Now().String()))
 	initDBTable()
 	api.Router(r)
 
 	// 运行服务器
-	r.Run(":8080")
+	err = r.Run(":8080")
+	if err != nil {
+		log.Error("runtime failed", log.Err(err))
+		return
+	}
 }
 
 func initDBTable() {
 	engine := dal.GetDb()
 	err := engine.Sync2(new(model.User))
 	if err != nil {
-		log.Fatal("Could not synchronize database", zap.Error(err))
+		log.Fatal("Could not synchronize database", log.Err(err))
 	}
 	err = engine.Sync2(new(model.Tenant))
 	if err != nil {
-		log.Fatal("Could not synchronize database", zap.Error(err))
+		log.Fatal("Could not synchronize database", log.Err(err))
 	}
 	err = engine.Sync2(new(model.Permission))
 	if err != nil {
-		log.Fatal("Could not synchronize database", zap.Error(err))
+		log.Fatal("Could not synchronize database", log.Err(err))
 	}
-	user := &model.User{Name: "root"}
+	user := &model.User{}
+	user.Name = "root"
 	ex, err := engine.Get(user)
 	if err != nil {
 		return
@@ -69,7 +74,7 @@ func LoggerReCover(l *log.Logger) gin.HandlerFunc {
 func LoggerMiddleware(l *log.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 在请求前执行某些操作
-		l.Info("New request", zap.String("path", c.Request.URL.Path))
+		l.Info("New request", log.String("path", c.Request.URL.Path))
 		c.Next()
 		// 在请求后执行某些操作
 	}

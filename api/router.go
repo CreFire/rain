@@ -17,7 +17,7 @@ func Router(r *gin.Engine) {
 	if err != nil {
 		return
 	}
-	r.GET("/register", registerHandler)
+	r.POST("/register", registerHandler)
 	r.GET("/select", SelectIdHandler)
 	r.POST("/login", loginHandler)
 
@@ -54,7 +54,7 @@ func roleMiddleware(requiredRole common.ROLE_TYPE) gin.HandlerFunc {
 			return
 		}
 
-		if user.Role != int32(requiredRole) {
+		if *user.Role != int32(requiredRole) {
 			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
 				"message": "您没有权限访问此资源",
 			})

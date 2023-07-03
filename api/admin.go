@@ -81,7 +81,7 @@ func SelectIdHandler(c *gin.Context) {
 	engine.Close()
 
 	// Create a new User object to search for
-	user := &model.User{Id: uint64(id)}
+	user := &model.User{Id: &id}
 
 	// Use the xorm Engine's Get method to retrieve the User from the database
 	if _, err := engine.Get(user); err != nil {
@@ -97,18 +97,20 @@ func SelectIdHandler(c *gin.Context) {
 
 func registerHandler(c *gin.Context) {
 	// 解析请求体中的 JSON 数据
-	var user model.User
+	var user = model.User{}
 	if err := c.BindJSON(&user); err != nil {
+		log.Error("bad req", log.Err(err), log.Any("user", user))
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
+	// 数据处理
+
 	// 获取数据库连接
 	engine := dal.GetDb()
-	defer engine.Close()
-
 	// 将用户信息插入到数据库中
 	if _, err := engine.Insert(&user); err != nil {
+		log.Error("bad req", log.Err(err), log.Any("user", user))
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

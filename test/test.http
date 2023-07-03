@@ -1,10 +1,79 @@
+POST http://localhost:80/api/item
+Content-Type: application/json
+
+{}
+
+###
 ### 登录
 POST http://localhost:8080/login
 Content-Type: application/json
 
 {
-  "name": "admin",
-  "password": "123456"
+  "name": "Alice",
+  "password": "password1"
+}
+### 注册
+POST http://localhost:8080/register
+Content-Type: multipart/form-data
+
+{
+  "avatar": "https://example.com/avatar1.jpg",
+  "name": "Alice",
+  "age": 25,
+  "birthday": "2023-01-01",
+  "email": "alice@example.com",
+  "password": "password1",
+  "position": 1,
+  "nickname": "Alice1",
+  "description": "User Alice",
+  "expireTime": 1672444800
 }
 
 ###
+[
+{
+        "id": 1,
+        "avatar": "https://example.com/avatar1.jpg",
+        "name": "Alice",
+        "age": 25,
+        "birthday": "1998-01-01",
+        "email": "alice@example.com",
+        "password": "password1",
+        "position": 1,
+        "nickname": "Alice1",
+        "description": "User Alice",
+        "expireTime": 1672444800,
+        "createTime": 1640995200,
+        "updateTime": 1640995200
+    },
+    {
+        "id": 2,
+        "avatar": "https://example.com/avatar2.jpg",
+        "name": "Bob",
+        "age": 30,
+        "birthday": "1993-01-01",
+        "email": "bob@example.com",
+        "password": "password2",
+        "position": 2,
+        "nickname": "Bob2",
+        "description": "User Bob",
+        "expireTime": 1672444800,
+        "createTime": 1640995200,
+        "updateTime": 1640995200
+    },
+    {
+        "id": 3,
+        "avatar": "https://example.com/avatar3.jpg",
+        "name": "Charlie",
+        "age": 35,
+        "birthday": "1988-01-01",
+        "email": "charlie@example.com",
+        "password": "password3",
+        "position": 3,
+        "nickname": "Charlie3",
+        "description": "User Charlie",
+        "expireTime": 1672444800,
+        "createTime": 1640995200,
+"updateTime": 1640995200
+}
+]

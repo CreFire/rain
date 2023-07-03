@@ -73,10 +73,39 @@ func getProdEncoder() zapcore.Encoder {
 	return zapcore.NewConsoleEncoder(encoderConfig)
 }
 
+//func getDevEncoder() zapcore.Encoder {
+//	encoderConfig := zap.NewDevelopmentEncoderConfig()
+//	encoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
+//	return zapcore.NewConsoleEncoder(encoderConfig)
+//}
+
 func getDevEncoder() zapcore.Encoder {
-	encoderConfig := zap.NewDevelopmentEncoderConfig()
+	encoderConfig := newDevelopmentEncoderConfig()
 	encoderConfig.EncodeLevel = zapcore.CapitalColorLevelEncoder
 	return zapcore.NewConsoleEncoder(encoderConfig)
+}
+
+func newDevelopmentEncoderConfig() zapcore.EncoderConfig {
+	return zapcore.EncoderConfig{
+		// Keys can be anything except the empty string.
+		TimeKey:        "T",
+		LevelKey:       "L",
+		NameKey:        "N",
+		CallerKey:      "C",
+		FunctionKey:    zapcore.OmitKey,
+		MessageKey:     "M",
+		StacktraceKey:  "S",
+		LineEnding:     zapcore.DefaultLineEnding,
+		EncodeLevel:    zapcore.CapitalLevelEncoder,
+		EncodeTime:     CustomTimeEncoder,
+		EncodeDuration: zapcore.StringDurationEncoder,
+		EncodeCaller:   zapcore.ShortCallerEncoder,
+	}
+}
+
+// CustomTimeEncoder 时间格式修改
+func CustomTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
+	enc.AppendString(t.Format("2006-01-02T15:04:05"))
 }
 
 func getLogLevel(level string) zapcore.Level {

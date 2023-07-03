@@ -60,7 +60,7 @@ func InitMysql() {
 	}
 	dsn := fmt.Sprintf(mysqlDsn, mysqlConfig.Username, mysqlConfig.Password, mysqlConfig.Host, mysqlConfig.Port, mysqlConfig.Db)
 	var err error
-	fmt.Printf("dsn:%v \n", dsn)
+	log.Info("mysql", log.Any("dsn", dsn), log.Any("time", time.Now()))
 	dbEngine, err = xorm.NewEngine(common.DBTypeMySQL, dsn)
 	if err != nil {
 		log.Fatal("mysql NewEngine err", log.Err(err))

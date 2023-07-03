@@ -3,7 +3,7 @@ package model
 import "time"
 
 type Tenant struct {
-	Id          uint      `xorm:"'id' AUTO_INCREMENT pk" json:"id"`               // 租户 ID，主键自增
+	Id          uint      `xorm:"bigint 'id' AUTO_INCREMENT pk" json:"id"`        // 租户 ID，主键自增
 	UserId      uint      `xorm:"'user_id' int(11) notnull index" json:"user_id"` // 租户所属用户 ID，外键关联用户表
 	Date        time.Time `xorm:"'date' date" json:"date"`                        // 租金缴纳日期
 	Water       float64   `xorm:"'water' double(10,2)" json:"water"`              // 水费

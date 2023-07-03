@@ -15,25 +15,25 @@ func Debug(msg string, fields ...zap.Field) {
 }
 
 func Info(msg string, fields ...zap.Field) {
-	exLogger.Info(msg, fields...)
+	exLogger.logger.Info(msg, fields...)
 }
 
 func Warn(msg string, fields ...zap.Field) {
-	exLogger.Warn(msg, fields...)
+	exLogger.logger.Warn(msg, fields...)
 }
 
 func Error(msg string, fields ...zap.Field) {
-	exLogger.Error(msg, fields...)
+	exLogger.logger.Error(msg, fields...)
 }
 
 func DPanic(msg string, fields ...zap.Field) {
-	exLogger.DPanic(msg, fields...)
+	exLogger.logger.DPanic(msg, fields...)
 }
 
 func Panic(msg string, fields ...zap.Field) {
-	exLogger.Panic(msg, fields...)
+	exLogger.logger.Panic(msg, fields...)
 }
 
 func Fatal(msg string, fields ...zap.Field) {
-	exLogger.Fatal(msg, fields...)
+	exLogger.logger.Fatal(msg, fields...)
 }

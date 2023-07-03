@@ -2,11 +2,12 @@ package log
 
 import (
 	"errors"
+	"fmt"
 	"github.com/CreFire/rain/utils/config"
+	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
-	"io"
 	"os"
 )
 
@@ -15,7 +16,14 @@ type Logger struct {
 }
 
 func init() {
-	exLogger, _ = New(config.Conf.Log)
+	var err error
+	exLogger, err = New(config.Conf.Log)
+	if err != nil {
+		_ = fmt.Errorf("err init new logger %v", err)
+		return
+	}
+	exLogger.Info("Logger initialization successful")
+
 }
 func New(cfg *config.Log) (*Logger, error) {
 	var (
@@ -46,9 +54,8 @@ func New(cfg *config.Log) (*Logger, error) {
 	}
 	// 设置日志输出
 	if cfg.Stdout {
-		writer = zapcore.Lock(os.Stdout)
+		writer = zapcore.AddSync(os.Stdout)
 	}
-	writer = zapcore.AddSync(io.Discard)
 	if cfg.Filename != "" {
 		fileWriter := zapcore.AddSync(&lumberjack.Logger{
 			Filename:   cfg.Filename,
@@ -65,6 +72,7 @@ func New(cfg *config.Log) (*Logger, error) {
 		)
 		if writer != nil {
 			writer = zapcore.NewMultiWriteSyncer(writer, fileWriter)
+			gin.DefaultWriter = writer
 		} else {
 			writer = fileWriter
 		}
@@ -73,12 +81,12 @@ func New(cfg *config.Log) (*Logger, error) {
 	core = zapcore.NewCore(encoder, writer, level)
 
 	// 添加 Caller 和 StackTrace
-	logger := zap.New(core, zap.AddCaller(), zap.AddStacktrace(zapcore.DPanicLevel))
-
+	templog := zap.New(core, zap.AddCaller(), zap.AddStacktrace(zapcore.DPanicLevel))
+	logger := templog.WithOptions(zap.AddCallerSkip(1))
 	if fileCore != nil {
 		fileLogger := zap.New(fileCore, zap.AddCaller(), zap.AddStacktrace(zapcore.DPanicLevel))
 		defer fileLogger.Sync()
-		fileLogger.Info("Logger initialization successful")
+		fileLogger.Info("fileLogger initialization successful")
 	}
 	return &Logger{logger: logger}, nil
 }
