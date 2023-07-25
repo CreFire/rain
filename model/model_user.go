@@ -2,7 +2,7 @@ package model
 
 import (
 	"errors"
-	"github.com/CreFire/rain/dal"
+	"github.com/CreFire/rain/internal/server/dal"
 	"time"
 )
 
@@ -17,7 +17,7 @@ type User struct {
 	PassWord    string     `xorm:"'password' varchar(25)" json:"password,omitempty"`  // 用户密码（可选）
 	Role        *int32     `xorm:"'position' int" json:"position"`                    // 用户职位
 	Nickname    *string    `xorm:"'nickname' varchar(50)" json:"nickname"`            // 用户昵称
-	iPhone      *string    `xorm:"varchar(20)" json:"IPhone"`                         // 用户手机号码
+	IPhone      *string    `xorm:"varchar(20)" json:"IPhone"`                         // 用户手机号码
 	Description *string    `xorm:"bigint" json:"description"`                         // 描述
 	ExpireTime  *int64     `xorm:"bigint" json:"expireTime"`                          // 导出时间
 	CreateTime  *int64     `xorm:"bigint" json:"createTime"`                          // 创建时间

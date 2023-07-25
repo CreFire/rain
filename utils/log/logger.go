@@ -12,7 +12,8 @@ import (
 )
 
 type Logger struct {
-	logger *zap.Logger
+	logger  *zap.Logger
+	loggerF *zap.SugaredLogger
 }
 
 func init() {
@@ -83,12 +84,13 @@ func New(cfg *config.Log) (*Logger, error) {
 	// 添加 Caller 和 StackTrace
 	templog := zap.New(core, zap.AddCaller(), zap.AddStacktrace(zapcore.DPanicLevel))
 	logger := templog.WithOptions(zap.AddCallerSkip(1))
+	sugaredLogger := logger.Sugar()
 	if fileCore != nil {
 		fileLogger := zap.New(fileCore, zap.AddCaller(), zap.AddStacktrace(zapcore.DPanicLevel))
 		defer fileLogger.Sync()
 		fileLogger.Info("fileLogger initialization successful")
 	}
-	return &Logger{logger: logger}, nil
+	return &Logger{logger: logger, loggerF: sugaredLogger}, nil
 }
 
 func (l *Logger) Debug(msg string, fields ...zap.Field) {

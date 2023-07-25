@@ -3,7 +3,7 @@ package api
 import (
 	"fmt"
 	"github.com/CreFire/rain/common"
-	"github.com/CreFire/rain/dal"
+	"github.com/CreFire/rain/internal/server/dal"
 	"github.com/CreFire/rain/model"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"

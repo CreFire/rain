@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/CreFire/rain/api"
-	"github.com/CreFire/rain/dal"
+	"github.com/CreFire/rain/internal/server/api"
+	"github.com/CreFire/rain/internal/server/dal"
 	"github.com/CreFire/rain/model"
 	"github.com/CreFire/rain/utils/log"
 	"github.com/gin-gonic/gin"
