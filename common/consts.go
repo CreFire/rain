@@ -20,8 +20,6 @@ const (
 const (
 	ROLE_TOURIST ROLE_TYPE = iota
 	ROLE_MEMBER
-	ROLE_NURSE
-	ROLE_DICTOR
 	ROLE_ADMIN
 )
 

@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package pet;
+option  go_package = "./pb";
+message Pet {
+  int32 id = 1;
+  string name = 2;
+  string species = 3;
+}
+
+message GetPetResponse {
+  bool success = 1;
+  Pet data = 2;
+  string error = 3;
+}

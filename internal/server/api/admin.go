@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-func loginHandler(c *gin.Context) {
+func LoginHandler(c *gin.Context) {
 	// Get the username and password from the request
 	user := model.User{}
 	// Create a new User object to search for
@@ -95,7 +95,7 @@ func SelectIdHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, user)
 }
 
-func registerHandler(c *gin.Context) {
+func RegisterHandler(c *gin.Context) {
 	// 解析请求体中的 JSON 数据
 	var user = model.User{}
 	if err := c.BindJSON(&user); err != nil {
@@ -118,6 +118,6 @@ func registerHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "User registered successfully"})
 }
 
-func adminDashboardHandler(c *gin.Context) {
+func AdminDashboardHandler(c *gin.Context) {
 
 }

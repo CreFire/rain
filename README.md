@@ -1,7 +1,6 @@
-# 宠物医院
-后台+Admin后台
-
+#租户平台
 ```cmd
 go run .
 ```
 配置文件 conf/config.yaml
+
