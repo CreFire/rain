@@ -2,7 +2,8 @@ package model
 
 import (
 	"errors"
-	"github.com/CreFire/rain/internal/server/dal"
+	"github.com/CreFire/rain/dal"
+	"golang.org/x/crypto/bcrypt"
 	"time"
 )
 
@@ -15,7 +16,7 @@ type User struct {
 	Birthday    *time.Time `xorm:"date 'birthday'" json:"birthday,omitempty"`         // 用户出生日期（可选）
 	Email       *string    `xorm:"'email' varchar(255) unique_index" json:"email"`    // 用户邮箱（唯一）
 	PassWord    string     `xorm:"'password' varchar(25)" json:"password,omitempty"`  // 用户密码（可选）
-	Role        *int32     `xorm:"'position' int" json:"position"`                    // 用户职位
+	Role        *int32     `xorm:"'position' int" json:"position"`                    // 用户权限
 	Nickname    *string    `xorm:"'nickname' varchar(50)" json:"nickname"`            // 用户昵称
 	IPhone      *string    `xorm:"varchar(20)" json:"IPhone"`                         // 用户手机号码
 	Description *string    `xorm:"bigint" json:"description"`                         // 描述
@@ -28,10 +29,26 @@ func (u *User) TableName() string {
 	return "user" // 用户表
 }
 
+// CheckPassword 验证提供的密码是否与用户的密码哈希值匹配
+func (u *User) CheckPassword(password string) bool {
+	// u.PassWord 存储的是哈希过的密码
+	err := bcrypt.CompareHashAndPassword([]byte(u.PassWord), []byte(password))
+	return err == nil
+}
+
 // CreateUser 创建用户
 func CreateUser(user *User) error {
 	session := dal.GetDb().NewSession()
 	defer session.Close()
+
+	// 加密密码
+	if user.PassWord != "" {
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.PassWord), bcrypt.DefaultCost)
+		if err != nil {
+			return err
+		}
+		user.PassWord = string(hashedPassword)
+	}
 
 	affected, err := session.Insert(user)
 	if err != nil {
@@ -47,6 +64,15 @@ func CreateUser(user *User) error {
 func UpdateUser(id uint, user *User) error {
 	session := dal.GetDb().NewSession()
 	defer session.Close()
+
+	// 如果提供了新密码，则加密它
+	if user.PassWord != "" {
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.PassWord), bcrypt.DefaultCost)
+		if err != nil {
+			return err
+		}
+		user.PassWord = string(hashedPassword)
+	}
 
 	affected, err := session.ID(id).Update(user)
 	if err != nil {

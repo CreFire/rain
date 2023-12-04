@@ -54,9 +54,6 @@ func main() {
 		fmt.Printf("\n")
 	}
 	fmt.Printf("total:%+v \n", total)
-	for s, v := range total {
-
-	}
 	//// 保存结果到新文件
 	//if err := f.SaveAs("结果文件.xlsx"); err != nil {
 	//	log.Fatalf("保存文件失败: %v", err)

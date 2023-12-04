@@ -15,7 +15,7 @@ def compile_proto_files(proto_path, output_path, protoc_path, protoc_gen_go_path
 
 if __name__ == "__main__":
     proto_path = os.path.abspath("../internal/server/proto")
-    output_path = os.path.abspath("../internal/server/proto")
+    output_path = os.path.abspath("../internal/service/proto")
     protoc_path = "E:\work\go\src\\rain\scripts\protoc.exe"  # 你的 protoc.exe 路径
     protoc_gen_go_path = "E:\work\go\src\\rain\scripts\protoc-gen-go.exe"  # 你的 protoc-gen-go.exe 路径
     compile_proto_files(proto_path, output_path, protoc_path, protoc_gen_go_path)

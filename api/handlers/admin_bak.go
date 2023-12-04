@@ -1,9 +1,9 @@
-package api
+package handlers
 
 import (
 	"github.com/CreFire/rain/common"
-	"github.com/CreFire/rain/internal/server/dal"
 	"github.com/CreFire/rain/model"
+	"github.com/CreFire/rain/service/dal"
 	"github.com/CreFire/rain/utils/log"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"

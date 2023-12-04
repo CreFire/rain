@@ -3,8 +3,8 @@ package routers
 import (
 	"fmt"
 	"github.com/CreFire/rain/common"
-	"github.com/CreFire/rain/internal/server/api"
-	"github.com/CreFire/rain/internal/server/dal"
+	"github.com/CreFire/rain/internal/service/api"
+	"github.com/CreFire/rain/internal/service/dal"
 	"github.com/CreFire/rain/model"
 	"github.com/CreFire/rain/utils/config"
 	"github.com/dgrijalva/jwt-go"
