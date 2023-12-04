@@ -1,0 +1,13 @@
+2023-12-04T17:02:36	[34mINFO[0m	log/logger.go:91	fileLogger initialization successful
+2023-12-04T17:02:36	[34mINFO[0m	log/logger.go:26	Logger initialization successful
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /register                 --> github.com/CreFire/rain/internal/server/api.RegisterHandler (3 handlers)
+[GIN-debug] GET    /select                   --> github.com/CreFire/rain/internal/server/api.SelectIdHandler (3 handlers)
+[GIN-debug] POST   /login                    --> github.com/CreFire/rain/internal/server/api.LoginHandler (3 handlers)
+[GIN-debug] GET    /admin/dashboard          --> github.com/CreFire/rain/internal/server/api.AdminDashboardHandler (5 handlers)
+[GIN-debug] GET    /doctor/patients          --> github.com/CreFire/rain/internal/server/api.DoctorPatientsHandler (5 handlers)
+[GIN-debug] GET    /member/profile           --> github.com/CreFire/rain/internal/server/api.MemberProfileHandler (5 handlers)
+[GIN-debug] Listening and serving HTTP on :8080
