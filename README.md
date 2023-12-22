@@ -22,3 +22,7 @@ go run .
     - golang版本1.21
     - 使用gin作为开发框架 
   - typeScript 和vue3 作为前端 node版本21.3.0
+- 小游戏
+  - 文字修仙
+  - 抽奖
+  - 

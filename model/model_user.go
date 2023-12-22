@@ -11,6 +11,8 @@ import (
 type User struct {
 	Id          *uint64    `xorm:"'id' bigint AUTO_INCREMENT autoincr pk " json:"id"` // 用户 ID，主键自增
 	Avatar      *string    `xorm:"varchar(50) 'avatar' " json:"avatar"`               // 用户头像
+	Account     *string    `xorm:"varchar(50) 'Account' " json:"Account"`             // 用户账号
+	IPhone      *string    `xorm:"varchar(20)" json:"IPhone"`                         // 用户手机号码
 	Name        string     `xorm:"varchar(50) 'name' " json:"name"`                   // 用户姓名
 	Age         *int32     `xorm:"int(3) 'age' " json:"age"`                          // 用户年龄
 	Birthday    *time.Time `xorm:"date 'birthday'" json:"birthday,omitempty"`         // 用户出生日期（可选）
@@ -18,11 +20,16 @@ type User struct {
 	PassWord    string     `xorm:"'password' varchar(25)" json:"password,omitempty"`  // 用户密码（可选）
 	Role        *int32     `xorm:"'position' int" json:"position"`                    // 用户权限
 	Nickname    *string    `xorm:"'nickname' varchar(50)" json:"nickname"`            // 用户昵称
-	IPhone      *string    `xorm:"varchar(20)" json:"IPhone"`                         // 用户手机号码
 	Description *string    `xorm:"bigint" json:"description"`                         // 描述
 	ExpireTime  *int64     `xorm:"bigint" json:"expireTime"`                          // 导出时间
 	CreateTime  *int64     `xorm:"bigint" json:"createTime"`                          // 创建时间
 	UpdateTime  *int64     `xorm:"bigint" json:"updateTime"`                          // 更新时间
+}
+
+// LoginRequest 定义了登录请求的结构
+type LoginRequest struct {
+	Account  string `json:"Account"`
+	Password string `json:"password"`
 }
 
 func (u *User) TableName() string {
@@ -32,6 +39,9 @@ func (u *User) TableName() string {
 // CheckPassword 验证提供的密码是否与用户的密码哈希值匹配
 func (u *User) CheckPassword(password string) bool {
 	// u.PassWord 存储的是哈希过的密码
+	if u.PassWord == "" {
+		return false
+	}
 	err := bcrypt.CompareHashAndPassword([]byte(u.PassWord), []byte(password))
 	return err == nil
 }
@@ -58,6 +68,22 @@ func CreateUser(user *User) error {
 		return errors.New("failed to create user")
 	}
 	return nil
+}
+
+// 获取
+func GetUserByAccount(account string) (*User, error) {
+	session := dal.GetDb().NewSession()
+	defer session.Close()
+
+	user := &User{Account: &account}
+	has, err := session.Get(user)
+	if err != nil {
+		return nil, err
+	}
+	if !has {
+		return nil, errors.New("user not found")
+	}
+	return user, nil
 }
 
 // UpdateUser 更新用户

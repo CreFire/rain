@@ -11,3 +11,118 @@
 [GIN-debug] GET    /doctor/patients          --> github.com/CreFire/rain/internal/server/api.DoctorPatientsHandler (5 handlers)
 [GIN-debug] GET    /member/profile           --> github.com/CreFire/rain/internal/server/api.MemberProfileHandler (5 handlers)
 [GIN-debug] Listening and serving HTTP on :8080
+2023-12-05T10:30:07	[34mINFO[0m	log/logger.go:91	fileLogger initialization successful
+2023-12-05T10:30:07	[34mINFO[0m	log/logger.go:26	Logger initialization successful
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /login                    --> github.com/CreFire/rain/api/handlers.LoginHandler (4 handlers)
+[GIN-debug] POST   /register                 --> github.com/CreFire/rain/api/handlers.RegisterHandler (4 handlers)
+[GIN-debug] GET    /select                   --> github.com/CreFire/rain/api/handlers.SelectIdHandler (4 handlers)
+[GIN-debug] GET    /tenant/:id               --> github.com/CreFire/rain/api/handlers.GetTenant (4 handlers)
+[GIN-debug] POST   /tenant/pay               --> github.com/CreFire/rain/api/handlers.PayRent (4 handlers)
+[GIN-debug] GET    /tenant/admin/overdue     --> github.com/CreFire/rain/api/handlers.GetOverduePayments (4 handlers)
+[GIN-debug] POST   /tenant/admin/notify      --> github.com/CreFire/rain/api/handlers.SendNotification (4 handlers)
+[GIN-debug] POST   /wechat/notify            --> github.com/CreFire/rain/api/handlers.WechatNotify (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8080
+2023-12-05T10:30:33	[34mINFO[0m	log/logger.go:91	fileLogger initialization successful
+2023-12-05T10:30:33	[34mINFO[0m	log/logger.go:26	Logger initialization successful
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /login                    --> github.com/CreFire/rain/api/handlers.LoginHandler (4 handlers)
+[GIN-debug] POST   /register                 --> github.com/CreFire/rain/api/handlers.RegisterHandler (4 handlers)
+[GIN-debug] GET    /select                   --> github.com/CreFire/rain/api/handlers.SelectIdHandler (4 handlers)
+[GIN-debug] GET    /tenant/:id               --> github.com/CreFire/rain/api/handlers.GetTenant (4 handlers)
+[GIN-debug] POST   /tenant/pay               --> github.com/CreFire/rain/api/handlers.PayRent (4 handlers)
+[GIN-debug] GET    /tenant/admin/overdue     --> github.com/CreFire/rain/api/handlers.GetOverduePayments (4 handlers)
+[GIN-debug] POST   /tenant/admin/notify      --> github.com/CreFire/rain/api/handlers.SendNotification (4 handlers)
+[GIN-debug] POST   /wechat/notify            --> github.com/CreFire/rain/api/handlers.WechatNotify (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :81
+2023-12-05T10:33:51	[34mINFO[0m	log/logger.go:91	fileLogger initialization successful
+2023-12-05T10:33:51	[34mINFO[0m	log/logger.go:26	Logger initialization successful
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /login                    --> github.com/CreFire/rain/api/handlers.LoginHandler (4 handlers)
+[GIN-debug] POST   /register                 --> github.com/CreFire/rain/api/handlers.RegisterHandler (4 handlers)
+[GIN-debug] GET    /select                   --> github.com/CreFire/rain/api/handlers.SelectIdHandler (4 handlers)
+[GIN-debug] GET    /tenant/:id               --> github.com/CreFire/rain/api/handlers.GetTenant (4 handlers)
+[GIN-debug] POST   /tenant/pay               --> github.com/CreFire/rain/api/handlers.PayRent (4 handlers)
+[GIN-debug] GET    /admin/overdue            --> github.com/CreFire/rain/api/handlers.GetOverduePayments (4 handlers)
+[GIN-debug] POST   /admin/notify             --> github.com/CreFire/rain/api/handlers.SendNotification (4 handlers)
+[GIN-debug] POST   /wechat/notify            --> github.com/CreFire/rain/api/handlers.WechatNotify (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :81
+2023-12-05T14:22:39	[34mINFO[0m	log/logger.go:91	fileLogger initialization successful
+2023-12-05T14:22:39	[34mINFO[0m	log/logger.go:26	Logger initialization successful
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /login                    --> github.com/CreFire/rain/api/handlers.LoginHandler (4 handlers)
+[GIN-debug] POST   /register                 --> github.com/CreFire/rain/api/handlers.RegisterHandler (4 handlers)
+[GIN-debug] GET    /select                   --> github.com/CreFire/rain/api/handlers.SelectIdHandler (4 handlers)
+[GIN-debug] GET    /tenant/:id               --> github.com/CreFire/rain/api/handlers.GetTenant (4 handlers)
+[GIN-debug] POST   /tenant/pay               --> github.com/CreFire/rain/api/handlers.PayRent (4 handlers)
+[GIN-debug] GET    /admin/overdue            --> github.com/CreFire/rain/api/handlers.GetOverduePayments (4 handlers)
+[GIN-debug] POST   /admin/notify             --> github.com/CreFire/rain/api/handlers.SendNotification (4 handlers)
+[GIN-debug] POST   /wechat/notify            --> github.com/CreFire/rain/api/handlers.WechatNotify (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :81
+2023-12-05T16:04:43	[34mINFO[0m	log/logger.go:91	fileLogger initialization successful
+2023-12-05T16:04:43	[34mINFO[0m	log/logger.go:26	Logger initialization successful
+2023-12-05T16:04:43	[34mINFO[0m	dal/dal.go:52	mysql	{"dsn": "root:j347803820@tcp(139.155.253.90:3306)/raindb?charset=utf8mb4&parseTime=True&loc=Local&timeout=3s&readTimeout=1s&writeTimeout=1s&interpolateParams=true", "time": "2023-12-05T16:04:43"}
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /login                    --> github.com/CreFire/rain/api/handlers.LoginHandler (4 handlers)
+[GIN-debug] POST   /register                 --> github.com/CreFire/rain/api/handlers.RegisterHandler (4 handlers)
+[GIN-debug] GET    /select                   --> github.com/CreFire/rain/api/handlers.SelectIdHandler (4 handlers)
+[GIN-debug] GET    /tenant/:id               --> github.com/CreFire/rain/api/handlers.GetTenant (4 handlers)
+[GIN-debug] POST   /tenant/pay               --> github.com/CreFire/rain/api/handlers.PayRent (4 handlers)
+[GIN-debug] GET    /admin/overdue            --> github.com/CreFire/rain/api/handlers.GetOverduePayments (4 handlers)
+[GIN-debug] POST   /admin/notify             --> github.com/CreFire/rain/api/handlers.SendNotification (4 handlers)
+[GIN-debug] POST   /wechat/notify            --> github.com/CreFire/rain/api/handlers.WechatNotify (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :81
+2023-12-05T16:05:29	[34mINFO[0m	log/logger.go:91	fileLogger initialization successful
+2023-12-05T16:05:29	[34mINFO[0m	log/logger.go:26	Logger initialization successful
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /login                    --> github.com/CreFire/rain/api/handlers.LoginHandler (4 handlers)
+[GIN-debug] POST   /register                 --> github.com/CreFire/rain/api/handlers.RegisterHandler (4 handlers)
+[GIN-debug] GET    /select                   --> github.com/CreFire/rain/api/handlers.SelectIdHandler (4 handlers)
+[GIN-debug] GET    /tenant/:id               --> github.com/CreFire/rain/api/handlers.GetTenant (4 handlers)
+[GIN-debug] POST   /tenant/pay               --> github.com/CreFire/rain/api/handlers.PayRent (4 handlers)
+[GIN-debug] GET    /admin/overdue            --> github.com/CreFire/rain/api/handlers.GetOverduePayments (4 handlers)
+[GIN-debug] POST   /admin/notify             --> github.com/CreFire/rain/api/handlers.SendNotification (4 handlers)
+[GIN-debug] POST   /wechat/notify            --> github.com/CreFire/rain/api/handlers.WechatNotify (3 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :81

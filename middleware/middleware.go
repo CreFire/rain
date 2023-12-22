@@ -1,47 +1,43 @@
-package routers
+package middleware
 
 import (
 	"fmt"
 	"github.com/CreFire/rain/common"
-	"github.com/CreFire/rain/internal/service/api"
-	"github.com/CreFire/rain/internal/service/dal"
+	"github.com/CreFire/rain/dal"
 	"github.com/CreFire/rain/model"
-	"github.com/CreFire/rain/utils/config"
+	"github.com/CreFire/rain/service"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"strings"
 )
 
-func Router(r *gin.Engine) {
-	r.Use(gin.Logger())
-	r.Use(gin.Recovery())
-	err := r.SetTrustedProxies(nil)
-	if err != nil {
-		return
-	}
-	r.POST("/register", api.RegisterHandler)
-	r.GET("/select", api.SelectIdHandler)
-	r.POST("/login", api.LoginHandler)
-
-	// 管理员
-	adminRoutes := r.Group("/admin")
-	adminRoutes.Use(authMiddleware(), roleMiddleware(common.ROLE_ADMIN))
-	{
-		adminRoutes.GET("/dashboard", api.AdminDashboardHandler)
-	}
-
-	// 租户路由
-	memberRoutes := r.Group("/member")
-	memberRoutes.Use(authMiddleware(), roleMiddleware(common.ROLE_MEMBER))
-	{
-		memberRoutes.GET("/profile", api.MemberProfileHandler)
-	}
-	port := config.Conf.Server.Port
-	r.Run(port)
-}
-
-func roleMiddleware(requiredRole common.ROLE_TYPE) gin.HandlerFunc {
+func RoleMiddleware(requiredRole common.Role) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		authHeader := c.Request.Header.Get("Authorization")
+		parts := strings.SplitN(authHeader, " ", 2)
+		if len(parts) != 2 || parts[0] != "Bearer" {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"message": "授权格式错误",
+			})
+			return
+		}
+		tokenString := parts[1]
+
+		_, err := service.ParseToken(tokenString)
+		if err != nil {
+			if ve, ok := err.(*jwt.ValidationError); ok {
+				if ve.Errors&jwt.ValidationErrorMalformed != 0 {
+					// Token格式错误
+				} else if ve.Errors&(jwt.ValidationErrorExpired|jwt.ValidationErrorNotValidYet) != 0 {
+					// Token过期或未激活
+				} else {
+					// Token签名无效
+				}
+				c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message": "无效Token"})
+				return
+			}
+		}
 		userID, _ := c.Get("userID")
 		var user = model.User{}
 		has, err := dal.GetDb().ID(userID).Get(&user)
@@ -52,7 +48,7 @@ func roleMiddleware(requiredRole common.ROLE_TYPE) gin.HandlerFunc {
 			return
 		}
 
-		if *user.Role != int32(requiredRole) {
+		if *user.Role < int32(requiredRole) {
 			c.AbortWithStatusJSON(http.StatusForbidden, gin.H{
 				"message": "您没有权限访问此资源",
 			})

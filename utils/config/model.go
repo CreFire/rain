@@ -1,5 +1,7 @@
 package config
 
+import "time"
+
 type Config struct {
 	Server  *Server  `yaml:"server" json:"server"`
 	Log     *Log     `yaml:"log" json:"log"`
@@ -15,7 +17,8 @@ type Server struct {
 }
 
 type Sqlite3 struct {
-	Enable bool `yaml:"enable"`
+	DatareSource string `yaml:"datareSource"`
+	Enable       bool   `yaml:"enable"`
 }
 
 type Mysql struct {
@@ -38,6 +41,7 @@ type Log struct {
 	EncoderConfig    EncoderConfig `yaml:"encoderConfig"`
 	ErrorOutputPaths []string      `yaml:"errorOutputPaths"`
 
+	RotateConfig
 	Compress       bool   `yaml:"compress"`
 	Level          string `yaml:"level"`
 	Filename       string `yaml:"filename"`
@@ -47,6 +51,22 @@ type Log struct {
 	FileMaxBackups int    `yaml:"file_max_backups"`
 	Stdout         bool   `yaml:"stdout"`
 }
+
+type RotateConfig struct {
+	// 共用配置
+	Filename string // 完整文件名
+	MaxAge   int    // 保留旧日志文件的最大天数
+
+	// 按时间轮转配置
+	RotationTime time.Duration // 日志文件轮转时间
+
+	// 按大小轮转配置
+	MaxSize    int  // 日志文件最大大小（MB）
+	MaxBackups int  // 保留日志文件的最大数量
+	Compress   bool // 是否对日志文件进行压缩归档
+	LocalTime  bool // 是否使用本地时间，默认 UTC 时间
+}
+
 type EncoderConfig struct {
 	MessageKey   string `yaml:"messageKey"`
 	LevelKey     string `yaml:"levelKey"`

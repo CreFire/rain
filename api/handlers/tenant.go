@@ -6,6 +6,7 @@ import (
 )
 
 func GetTenant(c *gin.Context) {
+
 	// 获取租户信息逻辑
 	c.JSON(http.StatusOK, gin.H{"message": "Tenant info"})
 }

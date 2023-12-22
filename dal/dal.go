@@ -19,7 +19,7 @@ var (
 const mysqlDsn = "%s:%s@tcp(%s:%v)/%s?charset=utf8mb4&parseTime=True&loc=Local&timeout=3s&readTimeout" +
 	"=1s&writeTimeout=1s&interpolateParams=true"
 
-func NewDB() (err error) {
+func NewDB() {
 	//nolint:critic
 	if config.Conf.Sqlite3 != nil && config.Conf.Sqlite3.Enable {
 		initSQLite()
@@ -28,29 +28,18 @@ func NewDB() (err error) {
 		InitMysql()
 		DbType = common.DBTypeMySQL
 	} else {
-		log.Fatal("No database available")
+		log.Fatal("No Set database conf")
+		return
 	}
 	if dbEngine == nil {
-		log.Fatal("no available database")
+		log.Fatal("dbEngine == nil no available database")
+		return
 	}
 	sqlDB := dbEngine.DB()
 	sqlDB.SetMaxIdleConns(200)
 	sqlDB.SetMaxOpenConns(300)
 	sqlDB.SetConnMaxIdleTime(time.Hour)
 
-	return nil
-}
-
-func initSQLite() {
-	sqliteConfig := config.Conf.Sqlite3
-	if sqliteConfig == nil {
-		log.Fatal("nil SQLite config")
-	}
-	var err error
-	dbEngine, err = xorm.NewEngine(common.DBTypeSQLite, "./data")
-	if err != nil {
-		log.Fatal("nil SQLite config")
-	}
 }
 
 func InitMysql() {
@@ -60,10 +49,10 @@ func InitMysql() {
 	}
 	dsn := fmt.Sprintf(mysqlDsn, mysqlConfig.Username, mysqlConfig.Password, mysqlConfig.Host, mysqlConfig.Port, mysqlConfig.Db)
 	var err error
-	log.Info("mysql", log.Any("dsn", dsn), log.Any("time", time.Now()))
+	log.Info("mysql", "dsn", dsn, "time", time.Now())
 	dbEngine, err = xorm.NewEngine(common.DBTypeMySQL, dsn)
 	if err != nil {
-		log.Fatal("mysql NewEngine err", log.Err(err))
+		log.Fatal("mysql NewEngine err", "err", err)
 	}
 	if err = dbEngine.Ping(); err != nil {
 		fmt.Println("Error on pinging database: ", err)

@@ -28,3 +28,12 @@ const (
 	// AttachmentTypeMinIO AttachmentTypeMinIO
 	AttachmentTypeMinIO
 )
+
+type Role int32
+
+const (
+	VISTOR Role = 0
+	CUSTOM Role = 1
+	DICTOR Role = 2
+	ADMIN  Role = 3
+)

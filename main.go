@@ -2,19 +2,22 @@ package main
 
 import (
 	routes "github.com/CreFire/rain/api/routers"
+	"github.com/CreFire/rain/dal"
 	"github.com/CreFire/rain/utils/config"
+	"github.com/CreFire/rain/utils/log"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	// 配置文件读取
-	config.ReadConfig()
+	config.ReadConfig()  // 加载配置
+	SetConfig()          // 设置初始配置
+	log.InitLog()        // 日志初始化
+	dal.NewDB()          // 数据库初始化
+	routes.SetupRouter() // 设置路由
+}
+
+func SetConfig() {
 	// 设置Gin的模式
-	gin.SetMode(gin.DebugMode)
-	// 设置路由
-	router := routes.SetupRouter()
-	// 启动HTTP服务器
-	if err := router.Run(config.Conf.Server.Port); err != nil {
-		panic("Failed to run server: " + err.Error())
-	}
+	gin.SetMode(gin.ReleaseMode)
 }
